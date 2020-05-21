@@ -46,6 +46,7 @@
         document.querySelector('button.start').onclick = start
         document.querySelector('button.stop').onclick = stop
         document.querySelector('button.reset').onclick = reset
+        document.querySelector('[data-link-name="Check all"]').addEventListener('click', stop)
     }
 
     function start() {
