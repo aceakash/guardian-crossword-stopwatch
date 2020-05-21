@@ -53,7 +53,7 @@
           return
         }
         startTime = new Date()
-        updateInterval = setInterval(updateElapsedTime, 500)
+        updateInterval = setInterval(updateElapsedTime, 250)
     }
 
     function stop() {
@@ -73,7 +73,14 @@
         let now = new Date()
         let elapsedMs = now - startTime
         let formattedTime = formatTime(elapsedMs)
-        document.querySelector('.display').innerText = formattedTime
+        if (elapsedMs >= 10*60*1000) {
+            document.querySelector('.display').innerHTML = `<span style="font-weight: bold; color: red;">${formattedTime}</span>`
+        } else if (elapsedMs >= 7*60*1000) {
+            document.querySelector('.display').innerHTML = `<span style="font-weight: bold; color: orange;">${formattedTime}</span>`
+        } else {
+            document.querySelector('.display').innerHTML = formattedTime
+        }
+
         return formattedTime
     }
 
