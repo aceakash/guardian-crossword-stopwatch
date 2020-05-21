@@ -26,11 +26,20 @@
 
     function init() {
         let watchNode = document.createElement('div')
-        watchNode.innerHTML = "<b>hello! the stopwatch will go here</b>"
-        
+        watchNode.innerHTML = `
+<div class="display">00:00</div>
+<div>
+  <button>Start</button>
+  <button>Stop</button>
+  <button>Reset</button>
+</div>
+`
+
         const container = document.querySelector('#crossword')
         const grid = document.querySelector('.content__main')
         watchNode = container.insertBefore(watchNode, grid)
         watchNode.style.paddingLeft = "8.25rem"
     }
+
+
 })();
