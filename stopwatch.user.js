@@ -20,6 +20,7 @@
     }, 100)
 
     let startTime = null
+    let updateInterval = null
 
     function isReady() {
         const el = document.querySelector('.crossword__clue__text')
@@ -52,26 +53,50 @@
           return
         }
         startTime = new Date()
+        updateInterval = setInterval(updateElapsedTime, 500)
     }
 
     function stop() {
         if (startTime == null) {
           return
         }
-        let now = new Date()
-        document.querySelector('.display').innerText = (now-startTime)
+        updateElapsedTime()
         startTime = null
+        clearInterval(updateInterval)
+        updateInterval = null
     }
 
-    function elapsedTime() {
+    function updateElapsedTime() {
         if (startTime == null) {
             return null
         }
-        
+        let now = new Date()
+        let elapsedMs = now - startTime
+        let formattedTime = formatTime(elapsedMs)
+        document.querySelector('.display').innerText = formattedTime
+        return formattedTime
+    }
+
+    function formatTime(ms) {
+        const fullSeconds = Math.round(ms/1000)
+        const fullMinutes = Math.floor(fullSeconds/60)
+        const seconds = fullSeconds%60
+
+        const toLength2 = f => {
+            if (f < 10) {
+                return `0${f}`
+            } else {
+                return `${f}`
+            }
+        }
+
+        return `${toLength2(fullMinutes)}:${toLength2(seconds)}`
     }
 
     function reset() {
         startTime = null
+        clearInterval(updateInterval)
+        updateInterval = null
         document.querySelector('.display').innerText = '00:00'
     }
 
