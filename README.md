@@ -1,6 +1,6 @@
 # guardian-crossword-stopwatch
 Tampermonkey user script to show a stopwatch in a Guardian Quick Crossword, so you can track your solve times.
-Will automatically stop the clock when Check All is clicked.
+Will automatically stop the clock when Check All is clicked, and copy the time to the clipboard.
 
 # How to install locally
 
