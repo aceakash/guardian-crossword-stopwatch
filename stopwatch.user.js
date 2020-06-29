@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Guardian Crossword Stopwatch
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  Stopwatch for timing how long solving a Guardian Crossword takes
 // @author       Akash
 // @match        https://www.theguardian.com/crosswords/quick/*
@@ -43,6 +43,8 @@
         watchNode = container.insertBefore(watchNode, grid)
         watchNode.style.paddingLeft = "8.25rem"
 
+
+
         document.querySelector('button.start').onclick = start
         document.querySelector('button.stop').onclick = stop
         document.querySelector('button.reset').onclick = reset
@@ -82,7 +84,21 @@
             document.querySelector('.display').innerHTML = formattedTime
         }
 
+        copyToClipboard(formattedTime)
+
         return formattedTime
+    }
+
+    function copyToClipboard(str) {
+        const el = document.createElement('textarea');
+        el.value = str;
+        el.setAttribute('readonly', '');
+        el.style.position = 'absolute';
+        el.style.left = '-9999px';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
     }
 
     function formatTime(ms) {
@@ -98,7 +114,7 @@
             }
         }
 
-        return `${toLength2(fullMinutes)}:${toLength2(seconds)}`
+        return `00:${toLength2(fullMinutes)}:${toLength2(seconds)}`
     }
 
     function reset() {
