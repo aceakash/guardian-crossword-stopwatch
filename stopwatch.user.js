@@ -8,14 +8,14 @@
 // @grant        none
 // ==/UserScript==
 
-(function() {
+(function () {
     'use strict';
 
     let interval = setInterval(function () {
         if (isReady()) {
-           clearInterval(interval);
-           init()
-           return
+            clearInterval(interval);
+            init()
+            return
         }
     }, 100)
 
@@ -53,7 +53,7 @@
 
     function start() {
         if (startTime != null) {
-          return
+            return
         }
         startTime = new Date()
         updateInterval = setInterval(updateElapsedTime, 250)
@@ -61,9 +61,11 @@
 
     function stop() {
         if (startTime == null) {
-          return
+            return
         }
         updateElapsedTime()
+        const formattedTime = getFormattedTime()
+        copyToClipboard(formattedTime)
         startTime = null
         clearInterval(updateInterval)
         updateInterval = null
@@ -83,9 +85,6 @@
         } else {
             document.querySelector('.display').innerHTML = formattedTime
         }
-
-        copyToClipboard(formattedTime)
-
         return formattedTime
     }
 
@@ -99,6 +98,10 @@
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
+    }
+
+    function getFormattedTime(elapsedMs = new Date() - startTime) {
+        return formatTime(elapsedMs)
     }
 
     function formatTime(ms) {
